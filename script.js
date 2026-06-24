@@ -1,11 +1,12 @@
-const targetDate = new Date("June 24, 2026 00:00:00");
+const targetDate = new Date(2026, 5, 24, 0, 0, 0);
 
 const countdown = document.getElementById("countdown");
 
 let animationStarted = false;
 
 
-// Появление строк по одной
+
+// Появление строк
 function typeLines(lines, element, delay = 4000){
 
     element.innerHTML = "";
@@ -27,17 +28,22 @@ function typeLines(lines, element, delay = 4000){
 
         element.appendChild(p);
 
-        setTimeout(()=>{
+        setTimeout(() => {
+
             p.style.opacity = "1";
+
         },100);
 
         index++;
 
         setTimeout(showLine, delay);
+
     }
 
     showLine();
+
 }
+
 
 
 // Создание звезд
@@ -51,44 +57,36 @@ function createStars(){
 
         star.classList.add("star");
 
-        star.style.left = Math.random() * 100 + "%";
+        star.style.left = Math.random()*100 + "%";
 
-        star.style.top = Math.random() * 100 + "%";
+        star.style.top = Math.random()*100 + "%";
 
         star.style.animationDuration =
-            (2 + Math.random() * 3) + "s";
+            (2 + Math.random()*3) + "s";
 
         sky.appendChild(star);
+
     }
 
 }
 
-setInterval(()=>{
-
-    createShootingStar();
-
-},3000);
 
 
-setInterval(()=>{
-
-    createHeart();
-
-},1500);
-
+// Падающая звезда
 function createShootingStar(){
 
     const star = document.createElement("div");
 
     star.classList.add("shooting-star");
 
-    star.style.left = (Math.random()*100)+"%";
+    star.style.left = (Math.random()*100) + "%";
 
-    star.style.top = (Math.random()*50)+"%";
+    star.style.top = (Math.random()*50) + "%";
 
-    document.getElementById("stars-page").appendChild(star);
+    document.getElementById("stars-page")
+        .appendChild(star);
 
-    setTimeout(()=>{
+    setTimeout(() => {
 
         star.remove();
 
@@ -96,6 +94,9 @@ function createShootingStar(){
 
 }
 
+
+
+// Сердечки
 function createHeart(){
 
     const heart = document.createElement("div");
@@ -104,32 +105,27 @@ function createHeart(){
 
     heart.innerHTML = "❤️";
 
-    heart.style.left = (Math.random()*100)+"%";
+    heart.style.left = (Math.random()*100) + "%";
 
     heart.style.bottom = "0px";
 
     heart.style.fontSize =
-
-        (15+Math.random()*20)+"px";
-
+        (15 + Math.random()*20) + "px";
 
     heart.style.animationDuration =
-
-        (4+Math.random()*4)+"s";
-
+        (4 + Math.random()*4) + "s";
 
     document.getElementById("stars-page")
-
         .appendChild(heart);
 
-
-    setTimeout(()=>{
+    setTimeout(() => {
 
         heart.remove();
 
     },8000);
 
 }
+
 
 
 // Главная анимация
@@ -143,7 +139,7 @@ function startAnimation(){
     document.getElementById("timer-page").style.opacity = "0";
 
 
-    setTimeout(()=>{
+    setTimeout(() => {
 
         document.getElementById("timer-page").style.display = "none";
 
@@ -154,7 +150,11 @@ function startAnimation(){
 
         music.volume = 0.5;
 
-        music.play();
+        music.play().catch(error => {
+
+            console.log(error);
+
+        });
 
 
         typeLines([
@@ -178,15 +178,20 @@ function startAnimation(){
         4000);
 
 
-        // Через 30 секунд переходим к звездам
 
-        setTimeout(()=>{
+        // Через 30 секунд звездное небо
+
+        setTimeout(() => {
 
             document.getElementById("photo-page").style.display = "none";
 
             document.getElementById("stars-page").style.display = "flex";
 
             createStars();
+
+            setInterval(createShootingStar, 3000);
+
+            setInterval(createHeart, 1500);
 
 
             typeLines([
@@ -226,6 +231,7 @@ function startAnimation(){
 }
 
 
+
 // Таймер
 function updateTimer(){
 
@@ -241,6 +247,7 @@ function updateTimer(){
         countdown.innerHTML = "00:00:00";
 
         return;
+
     }
 
 
@@ -264,6 +271,7 @@ function updateTimer(){
         + String(seconds).padStart(2,"0");
 
 }
+
 
 
 setInterval(updateTimer,1000);
