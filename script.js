@@ -1,4 +1,4 @@
-const targetDate = new Date(2026, 5, 24, 0, 0, 0);
+const targetDate = new Date("June 25, 2026 00:35:00");
 
 const countdown = document.getElementById("countdown");
 
