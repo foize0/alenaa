@@ -1,9 +1,4 @@
-const targetDate = new Date("June 25, 2026 00:35:00");
-
-const countdown = document.getElementById("countdown");
-
 let animationStarted = false;
-
 
 
 // Появление строк
@@ -29,9 +24,7 @@ function typeLines(lines, element, delay = 4000){
         element.appendChild(p);
 
         setTimeout(() => {
-
             p.style.opacity = "1";
-
         },100);
 
         index++;
@@ -41,12 +34,10 @@ function typeLines(lines, element, delay = 4000){
     }
 
     showLine();
-
 }
 
 
-
-// Создание звезд
+// Звезды
 function createStars(){
 
     const sky = document.getElementById("stars-page");
@@ -71,7 +62,6 @@ function createStars(){
 }
 
 
-
 // Падающая звезда
 function createShootingStar(){
 
@@ -93,7 +83,6 @@ function createShootingStar(){
     },2000);
 
 }
-
 
 
 // Сердечки
@@ -127,153 +116,89 @@ function createHeart(){
 }
 
 
-
-// Главная анимация
+// Запуск сайта
 function startAnimation(){
 
     if(animationStarted) return;
 
     animationStarted = true;
 
+    document.getElementById("photo-page").style.display = "flex";
 
-    document.getElementById("timer-page").style.opacity = "0";
+
+    const music = document.getElementById("music");
+
+    music.volume = 0.5;
+
+    music.play().catch(error => {
+        console.log(error);
+    });
+
+
+    typeLines([
+
+        "Именно здесь всё началось ❤️",
+
+        "Именно здесь я очень волновался.",
+
+        "И именно здесь ты сделала меня самым счастливым человеком.",
+
+        "Спасибо за этот прекрасный месяц.",
+
+        "Ты делаешь мою жизнь намного счастливее.",
+
+        "И я очень надеюсь, что это только начало нашей истории ❤️"
+
+    ],
+
+    document.getElementById("message"),
+
+    4000);
 
 
     setTimeout(() => {
 
-        document.getElementById("timer-page").style.display = "none";
+        document.getElementById("photo-page").style.display = "none";
 
-        document.getElementById("photo-page").style.display = "flex";
+        document.getElementById("stars-page").style.display = "flex";
 
+        createStars();
 
-        const music = document.getElementById("music");
+        setInterval(createShootingStar, 3000);
 
-        music.volume = 0.5;
-
-        music.play().catch(error => {
-
-            console.log(error);
-
-        });
-
+        setInterval(createHeart, 1500);
 
         typeLines([
 
-            "Именно здесь всё началось ❤️",
+            "За твою улыбку.",
 
-            "Именно здесь я очень волновался.",
+            "За твой смех.",
 
-            "И именно здесь ты сделала меня самым счастливым человеком.",
+            "За наши разговоры.",
 
-            "Спасибо за этот прекрасный месяц.",
+            "За твою заботу.",
 
-            "Ты делаешь мою жизнь намного счастливее.",
+            "За каждый день рядом.",
 
-            "И я очень надеюсь, что это только начало нашей истории ❤️"
+            "За то, что рядом с тобой я счастлив.",
+
+            "За тебя ❤️",
+
+            "С первым месяцем, любимая ❤️",
+
+            "И пусть это будет лишь первая глава из многих.",
+
+            "Это только начало ❤️"
 
         ],
 
-        document.getElementById("message"),
+        document.getElementById("final-text"),
 
-        4000);
+        3500);
 
-
-
-        // Через 30 секунд звездное небо
-
-        setTimeout(() => {
-
-            document.getElementById("photo-page").style.display = "none";
-
-            document.getElementById("stars-page").style.display = "flex";
-
-            createStars();
-
-            setInterval(createShootingStar, 3000);
-
-            setInterval(createHeart, 1500);
-
-
-            typeLines([
-
-                "За твою улыбку.",
-
-                "За твой смех.",
-
-                "За наши разговоры.",
-
-                "За твою заботу.",
-
-                "За каждый день рядом.",
-
-                "За то, что рядом с тобой я счастлив.",
-
-                "За тебя ❤️",
-
-                "С первым месяцем, любимая ❤️",
-
-                "И пусть это будет лишь первая глава из многих.",
-
-                "Это только начало ❤️"
-
-            ],
-
-            document.getElementById("final-text"),
-
-            3500);
-
-
-        },30000);
-
-
-    },2000);
+    },30000);
 
 }
 
 
-
-// Таймер
-function updateTimer(){
-
-    const now = new Date();
-
-    const diff = targetDate - now;
-
-
-    if(diff <= 0){
-
-        startAnimation();
-
-        countdown.innerHTML = "00:00:00";
-
-        return;
-
-    }
-
-
-    const hours = Math.floor(diff / 1000 / 60 / 60);
-
-    const minutes = Math.floor(diff / 1000 / 60) % 60;
-
-    const seconds = Math.floor(diff / 1000) % 60;
-
-
-    countdown.innerHTML =
-
-        String(hours).padStart(2,"0")
-
-        + ":"
-
-        + String(minutes).padStart(2,"0")
-
-        + ":"
-
-        + String(seconds).padStart(2,"0");
-
-}
-
-
-
-setInterval(updateTimer,1000);
-
-updateTimer();
+window.onload = startAnimation;
