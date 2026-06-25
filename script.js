@@ -1,6 +1,7 @@
 let animationStarted = false;
 
-
+document.getElementById("photo-page").style.display = "none";
+document.getElementById("stars-page").style.display = "none";
 // Появление строк
 function typeLines(lines, element, delay = 4000){
 
@@ -201,4 +202,14 @@ function startAnimation(){
 }
 
 
-window.onload = startAnimation;
+document
+.getElementById("start-btn")
+.addEventListener("click", () => {
+
+    document
+    .getElementById("start-screen")
+    .style.display = "none";
+
+    startAnimation();
+
+});
